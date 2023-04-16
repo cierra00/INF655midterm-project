@@ -23,7 +23,7 @@ export default function App() {
     <Route path="/search" element={<SearchPage />} />
     <Route path="/products" element={<ProductPage />} />
     <Route path="/single" element={< SingleProduct/>} />
-    <Route path="/item/*" element={<ItemRoutes />} />
+    
     <Route path="*" element={<NotFound />} />
     </Routes>
    <Footer />

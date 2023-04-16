@@ -1,6 +1,8 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import Card from '../shared/Card';
 import { NavLink } from "react-router-dom";
+import {useLocation} from 'react-router-dom';
+import ProductData from "./ProductData";
 
 
 
@@ -16,19 +18,49 @@ export default function Product({
   
 }) {
 
+const [addCart, setAddCart] = useState(ProductData);
 
+ const location = useLocation();
+  
+  function handleAdd(e) {
+    e.preventDefault()
+    
+   const filteredData = ProductData.filter(product=> product.id == e.target.id);
+    filteredData.map((product) => {
+      console.log(product.inCart)
+      setAddCart(product.inCart === false ? product.inCart = true: false)
+      
+      console.log(product.inCart)
+    })
+   
+    
+   }
+
+   function handleDel(e) {
+    e.preventDefault()
+    
+   const filteredData = ProductData.filter(product=> product.id == e.target.id);
+    filteredData.map((product) => {
+      console.log(product.inCart)
+      setAddCart(product.inCart === true ? product.inCart = false: true)
+       
+      
+      console.log(product.inCart)
+    })
+   
+    
+   }   
+  
 
   return (
    <>
-   <NavLink to="/single">
+   
    <Card>
-
+   
       <div className="product">
         <img src={imageSRC} alt={imgAlt} />
       </div>
-
-      <div
-        >
+      <div>
         <h3>{name}</h3>
       </div>
       <div
@@ -39,10 +71,15 @@ export default function Product({
         className="text-display">
         ${price}.00 USD
       </div>
-      {inCart}
-      <button   className="btn">Add To Cart</button>
+      
+     
+
+      {location.pathname=== "/cart" ? <form onSubmit={handleDel} id={id}><button type="submit" className="btn" 
+      onSubmit={handleAdd}>Delete Item</button>
+      </form> :<form onSubmit={handleAdd} id={id}><button type="submit" className="btn" 
+      onSubmit={handleAdd}>Add to Cart </button></form> }
     </Card>
-    </NavLink>
+    
     </>
   );
 }

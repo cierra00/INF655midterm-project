@@ -2,20 +2,28 @@ import React, { useState, } from "react";
 import {useLocation} from 'react-router-dom';
 import Product from '../Product/Product';
 import SearchProduct from '../Product/SearchProduct';
+import ProductData from "./ProductData";
+
 
 
 export default function Products({ productList}) {
-  const [search, setSearch] = useState("");
-  const result = productList.filter((product)=> product.name.toLowerCase().includes(search.toLowerCase()));
-  const cart = productList.filter((products)=> products.inCart == productList.inCart );
+  const [search, setSearch] = useState(ProductData);
+  const result = productList.filter((product)=> product.name.toLowerCase().includes(search));
+ 
+
+  const cart = result.filter(product => {
+    return product.inCart === true;
+
+  });
   const location = useLocation();
+  
   if (location.pathname=== "/search"){
   return (
     <>
     <SearchProduct  setSearch={setSearch}/>
       {result.length ? (
         <div>
-          {result.map((product) => (
+            {result.map((product) => (
             <Product
               key={product.id}
               id={product.id}
@@ -25,7 +33,8 @@ export default function Products({ productList}) {
              imageSRC={product.imageSRC}
              alt={product.imgAlt}
              result={result}
-             inCart={cart}
+             inCart={product.inCart}
+             
              
             />
           ))}
@@ -36,44 +45,46 @@ export default function Products({ productList}) {
     </>
   )}
   // Cart Page
-  if (location.pathname=== "/cart"){
+  if (location.pathname === "/cart"){
     return (
       <>
-      
-      
-        {cart.length ? (
-          <div>
-            {cart.map((product) => (
-              <Product
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                price={product.price}
-                description={product.description}
-               imageSRC={product.imageSRC}
-               alt={product.imgAlt}
-               result={result}
-               inCart={cart}
-               
-              />
-            ))}
-          </div>
-        ) : (
-          <p>{cart.length} Results have been returned</p>
-        )}
-      </>
+    
+      {cart.length ? (
+        <div>
+          
+          {cart.map((product) => (
+            <Product
+              numberOfItems ={cart.length}
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              price={product.price}
+              description={product.description}
+             imageSRC={product.imageSRC}
+             alt={product.imgAlt}
+             result={result}
+             inCart={product.inCart}
+             
+/>
+          ))}
+         
+        </div>
+      ) : (
+        <p>{cart.length} Results have been returned</p>
+      )}
+    </>
     )}
   else {
     return (
       <>
-      
+       
         {result.length ? (
           <div>
             {result.map((product) => (
               <Product
                 key={product.id}
                 id={product.id}
-                name={product.name}
+                name={Product.name}
                 price={product.price}
                 description={product.description}
                imageSRC={product.imageSRC}

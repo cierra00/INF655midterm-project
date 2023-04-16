@@ -11,14 +11,16 @@ function CartPage() {
   const checkProduct = (id) => {
     setProductList(
       productList.map((product) =>
-        product.id === id ? { ...product, checked: !product.checked } : product
+        product.inCart === id ? { ...product, inCart: product.inCart } : product
       )
     );
   };
   return (
     <div className="container">
       <h2>Items in Your Cart</h2>
-      <Products
+      <Products canSearch = {false}
+      productlist={productList}
+      handleChecked={checkProduct}
         productList={productList}/>
     </div>
   );
