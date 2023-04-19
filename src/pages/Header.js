@@ -1,8 +1,10 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom';
 import { BsCartFill, BsSearch } from "react-icons/bs";
+import ProductData from '../components/Product/ProductData';
 
-export default function Header() {
+export default function Header(props) {
+  const filteredData = ProductData.filter(product=> product.inCart == true);
   return (
     <>
     <header className="header">
@@ -17,7 +19,7 @@ export default function Header() {
       </ul>
       
       <span>
-      <NavLink to="/cart"><BsCartFill /> Cart Items 0</NavLink>
+      <NavLink to="/cart"><BsCartFill /> Cart Items {filteredData.length}</NavLink>
       </span>
     </nav>
    

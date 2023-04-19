@@ -2,19 +2,16 @@ import React, { useState, } from "react";
 import {useLocation} from 'react-router-dom';
 import Product from '../Product/Product';
 import SearchProduct from '../Product/SearchProduct';
-import ProductData from "./ProductData";
+
 
 
 
 export default function Products({ productList}) {
-  const [search, setSearch] = useState(ProductData);
+  const [search, setSearch] = useState(" ");
   const result = productList.filter((product)=> product.name.toLowerCase().includes(search));
  
 
-  const cart = result.filter(product => {
-    return product.inCart === true;
-
-  });
+  const cart = result.filter(product =>  product.inCart === true);
   const location = useLocation();
   
   if (location.pathname=== "/search"){

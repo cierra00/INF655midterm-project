@@ -14,7 +14,9 @@ export default function Product({
   price,
   imageSRC,
   imgAlt,
-  inCart
+  inCart,
+  result,
+  productList
   
 }) {
 
@@ -24,32 +26,20 @@ const [addCart, setAddCart] = useState(ProductData);
   
   function handleAdd(e) {
     e.preventDefault()
-    
-   const filteredData = ProductData.filter(product=> product.id == e.target.id);
-    filteredData.map((product) => {
-      console.log(product.inCart)
-      setAddCart(product.inCart === false ? product.inCart = true: false)
-      
-      console.log(product.inCart)
-    })
    
-    
-   }
+   const filteredData = ProductData.filter(product=> e.target.id == product.id);
+   setAddCart( filteredData[0].inCart = true)
+ 
+}
 
-   function handleDel(e) {
-    e.preventDefault()
-    
-   const filteredData = ProductData.filter(product=> product.id == e.target.id);
-    filteredData.map((product) => {
-      console.log(product.inCart)
-      setAddCart(product.inCart === true ? product.inCart = false: true)
-       
-      
-      console.log(product.inCart)
-    })
-   
-    
-   }   
+function handleDel(e) {
+  e.preventDefault()
+ 
+ const filteredData = ProductData.filter(product=> e.target.id == product.id);
+ console.log( filteredData[0].inCart)
+//console.log(data.inCart)
+
+}
   
 
   return (
@@ -72,12 +62,14 @@ const [addCart, setAddCart] = useState(ProductData);
         ${price}.00 USD
       </div>
       
-     
+     {id}
 
-      {location.pathname=== "/cart" ? <form onSubmit={handleDel} id={id}><button type="submit" className="btn" 
-      onSubmit={handleAdd}>Delete Item</button>
-      </form> :<form onSubmit={handleAdd} id={id}><button type="submit" className="btn" 
-      onSubmit={handleAdd}>Add to Cart </button></form> }
+      {location.pathname=== "/cart" ? 
+      <form onSubmit={handleDel} >
+        <button type="submit" id={id} className="btn">Delete Item</button></form> 
+      
+      :<form onSubmit={handleAdd} id={id}><button type="submit" className="btn">Add to Cart</button></form>}
+      
     </Card>
     
     </>
